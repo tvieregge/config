@@ -8,7 +8,11 @@ set pastetoggle=<F10>
 set hidden
 set ignorecase
 set smartcase
+set viminfo='100,f1
 noremap <F1> <ESC>
+" This is needed for some reason
+inoremap <F1> <ESC>
+let timeout = 100
 
 let mapleader = " "
 nnoremap <silent> <return> :nohls<return><esc>
@@ -18,13 +22,17 @@ noremap <Leader>w :w<CR>
 noremap <Leader>q :q<CR>
 noremap <Leader>y "+y
 noremap <Leader>p "+p
-inoremap jk <Esc>
+inoremap kj <Esc>
+vnoremap kj <Esc>
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <leader>s <C-w>v<C-w>l
 nnoremap <leader>h <C-w>s<C-w>j
+
+" Marks should remember column by default
+nnoremap ' `
 
 " Move by screen line not file line (wordwrap)
 nnoremap j gj
@@ -57,6 +65,12 @@ vnoremap <silent> # :call setreg("?",
     \ '\\_s\\+', 'g')
     \ )<Cr>n
 
+" jump to the last position when reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
 " -----------------------------------------------------------------------------
 " Plugins 
 " -----------------------------------------------------------------------------
@@ -78,7 +92,7 @@ autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
-let $FZF_DEFAULT_COMMAND = 'rg --hidden --exclude .git'
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
 nnoremap ; :Buffers<CR>
 nnoremap <Leader>t :Files<CR>
 nnoremap <Leader>r :Tags<CR>
@@ -99,14 +113,19 @@ Plug 'tpope/vim-sensible'
 Plug 'Raimondi/delimitMate'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
+Plug 'bronson/vim-trailing-whitespace'
+" Doesn't work, but looks really cool
+"Plug 'shougo/echodoc.vim'
 
 " vim-signify options
 "--------------------------
 Plug 'mhinz/vim-signify'
-let g:signify_realtime = 1
-let g:signify_cursorhold_insert = 0
-let g:signify_vcs_list = [ 'git' ]
-let g:signify_cursorhold_insert = 0
+	" TODO: For some reason signify_cursorhold_insert and signify_cursorhold_normal
+	"		aren't respected
+	" let g:signify_realtime = 1
+	" let g:signify_cursorhold_insert = 0
+	" let g:signify_vcs_list = [ 'git' ]
+	" let g:signify_cursorhold_normal = 0
 
 call plug#end()
 
@@ -125,5 +144,5 @@ nnoremap <Leader>g :silent lgrep<Space>
 " -----------------------------------------------------------------------------
 " Formatting
 " -----------------------------------------------------------------------------
-set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4 
+set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
 set shiftround
