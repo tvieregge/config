@@ -12,24 +12,11 @@ set viminfo='100,f1
 noremap <F1> <ESC>
 " This is needed for some reason
 inoremap <F1> <ESC>
+" This doesn't seem to work
 let timeout = 100
 
 let mapleader = " "
 nnoremap <silent> <return> :nohls<return><esc>
-
-" Do things fast
-noremap <Leader>w :w<CR>
-noremap <Leader>q :q<CR>
-noremap <Leader>y "+y
-noremap <Leader>p "+p
-inoremap kj <Esc>
-vnoremap kj <Esc>
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <leader>s <C-w>v<C-w>l
-nnoremap <leader>h <C-w>s<C-w>j
 
 " Marks should remember column by default
 nnoremap ' `
@@ -72,6 +59,22 @@ if has("autocmd")
 endif
 
 " -----------------------------------------------------------------------------
+" Mappings
+" -----------------------------------------------------------------------------
+noremap <Leader>w :w<CR>
+noremap <Leader>q :q<CR>
+noremap <Leader>y "+y
+noremap <Leader>p "+p
+inoremap kj <Esc>
+vnoremap kj <Esc>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <leader>s <C-w>v<C-w>l
+nnoremap <leader>h <C-w>s<C-w>j
+
+" -----------------------------------------------------------------------------
 " Plugins 
 " -----------------------------------------------------------------------------
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -109,14 +112,6 @@ nnoremap <Leader>n :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
-Plug 'tpope/vim-sensible'
-Plug 'Raimondi/delimitMate'
-Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-commentary'
-Plug 'bronson/vim-trailing-whitespace'
-" Doesn't work, but looks really cool
-"Plug 'shougo/echodoc.vim'
-
 " vim-signify options
 "--------------------------
 Plug 'mhinz/vim-signify'
@@ -126,6 +121,14 @@ Plug 'mhinz/vim-signify'
 	" let g:signify_cursorhold_insert = 0
 	" let g:signify_vcs_list = [ 'git' ]
 	" let g:signify_cursorhold_normal = 0
+
+Plug 'tpope/vim-sensible'
+Plug 'Raimondi/delimitMate'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-commentary'
+Plug 'bronson/vim-trailing-whitespace'
+" Doesn't work, but looks really cool
+"Plug 'shougo/echodoc.vim'
 
 call plug#end()
 
