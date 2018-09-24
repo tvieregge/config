@@ -1,5 +1,20 @@
 # config
-pip3 install neovim
 Various application configurations
-.config/nvim/init.vim
-/etc/xdg/termite
+
+##TODO:
+Genral
+	* Script to intall all the files
+
+zsh
+	* install
+	* set prompt
+	* ??? probably more config
+
+nvim
+	* Autocompletion
+	* git integration
+	* terminal emulator usage?
+	* movement aids
+
+Terminal emulator
+	* Done?
