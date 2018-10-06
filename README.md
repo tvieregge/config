@@ -5,6 +5,7 @@ Various application configurations
 Genral
 	* Script to intall all the files
 	* nobeep.conf
+	* git config --global core.editor "vim"
 
 zsh
 	* install
