@@ -1,6 +1,8 @@
 # config
 Various application configurations
 
+Run install.sh to install configure a clean manjaro i3 installation (in progress)
+
 ##TODO:
 Genral
 	* Script to intall all the files
