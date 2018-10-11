@@ -96,7 +96,7 @@ autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
-let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
+let $FZF_DEFAULT_COMMAND = 'rg --files'
 nnoremap ; :Buffers<CR>
 nnoremap <Leader>t :Files<CR>
 nnoremap <Leader>r :Tags<CR>
