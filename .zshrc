@@ -104,3 +104,5 @@ source ~/.nvm/nvm.sh
 ZSH_THEME=""
 autoload -U promptinit; promptinit
 prompt pure
+
+eval $(keychain --eval --quiet id_rsa)
