@@ -14,3 +14,6 @@ ln -fs "$cwd/init.vim" ~/.config/nvim/init.vim
 ln -fs "$cwd/config" ~/config
 ln -fs "$cwd/move-cursor-window-center.sh" ~/move-cursor-window-center.sh
 
+# make zsh the default shell
+chsh -s $(which zsh)
+
