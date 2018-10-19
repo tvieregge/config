@@ -13,6 +13,8 @@ ln -fs "$cwd/.zshrc" ~/.zshrc
 ln -fs "$cwd/init.vim" ~/.config/nvim/init.vim
 ln -fs "$cwd/config" ~/config
 ln -fs "$cwd/move-cursor-window-center.sh" ~/move-cursor-window-center.sh
+mkdir ~/.config/termite
+ln -fs "$cwd/termite-config" ~/.config/termite/config
 
 # make zsh the default shell
 chsh -s $(which zsh)
