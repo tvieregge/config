@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Don't lock the screen if it's already locked
+pgrep i3lock  || i3lock --color 808080

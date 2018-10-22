@@ -1,0 +1,12 @@
+[Unit]
+Description=Lock the screen when going to sleep
+Before=suspend.target
+
+[Service]
+User=tim
+Type=forking
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/lock
+
+[Install]
+WantedBy=suspend.target

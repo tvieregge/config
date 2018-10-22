@@ -16,6 +16,10 @@ ln -fs "$cwd/move-cursor-window-center.sh" ~/move-cursor-window-center.sh
 mkdir ~/.config/termite
 ln -fs "$cwd/termite-config" ~/.config/termite/config
 
+# Install service for locking screen when computer sleeps
+ln -fs "$cwd/lock" /usr/bin/lock
+ln -fs "$cwd/sleeplock.service" /etc/systemd/system/sleeplock.service
+
 # make zsh the default shell
 chsh -s $(which zsh)
 
