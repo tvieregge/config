@@ -8,7 +8,7 @@
 # The list was generated with pacman -Qqet
 #
 # TODO TEMPORARY: This makes it work, but filters out packages from the AUR
-pacman -S --needed $(comm -12 <(pacman -Slq | sort) <(sort pkglist.txt))
+sudo pacman -S --needed $(comm -12 <(pacman -Slq | sort) <(sort pkglist.txt))
 
 #install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
