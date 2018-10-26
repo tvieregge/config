@@ -12,6 +12,10 @@ sudo pacman -S --needed $(comm -12 <(pacman -Slq | sort) <(sort pkglist.txt))
 
 #install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+# install NPM
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+#install pure prompt
+npm install --global pure-prompt
 
 cwd=$(pwd)
 ln -fs "$cwd/.zshrc" ~/.zshrc
@@ -28,3 +32,5 @@ sudo ln -fs "$cwd/sleeplock.service" /etc/systemd/system/sleeplock.service
 # make zsh the default shell
 chsh -s $(which zsh)
 
+# use ntp
+sudo timedatectl set-ntp true
