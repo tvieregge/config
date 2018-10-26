@@ -17,11 +17,16 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | 
 #install pure prompt
 npm install --global pure-prompt
 
+# install config files
 cwd=$(pwd)
 ln -fs "$cwd/.zshrc" ~/.zshrc
+
+mkdir ~/.config/nvim
 ln -fs "$cwd/init.vim" ~/.config/nvim/init.vim
+
 ln -fs "$cwd/config" ~/.i3/config
-ln -fs "$cwd/move-cursor-window-center.sh" ~/move-cursor-window-center.sh
+ln -fs "$cwd/move-cursor-window-center.sh" ~/.i3/move-cursor-window-center.sh
+
 mkdir ~/.config/termite
 ln -fs "$cwd/termite-config" ~/.config/termite/config
 
