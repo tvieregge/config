@@ -108,3 +108,5 @@ prompt pure
 # Only enter passphrase once
 # Source https://wiki.archlinux.org/index.php/SSH_keys
 eval $(keychain --eval --quiet id_rsa)
+
+alias e=$(which nvim)
