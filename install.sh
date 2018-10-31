@@ -17,6 +17,19 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | 
 #install pure prompt
 npm install --global pure-prompt
 
+# Install script to stop screen lock when watching media
+sudo ln -fs "$cwd/keep-awake.sh" /usr/bin/keep-awake
+
+# Install service for locking screen when computer sleeps
+sudo ln -fs "$cwd/lock" /usr/bin/lock
+sudo ln -fs "$cwd/sleeplock.service" /etc/systemd/system/sleeplock.service
+
+# make zsh the default shell
+chsh -s $(which zsh)
+
+# use ntp
+sudo timedatectl set-ntp true
+
 # install config files
 cwd=$(pwd)
 ln -fs "$cwd/.zshrc" ~/.zshrc
@@ -29,13 +42,3 @@ ln -fs "$cwd/move-cursor-window-center.sh" ~/.i3/move-cursor-window-center.sh
 
 mkdir ~/.config/termite
 ln -fs "$cwd/termite-config" ~/.config/termite/config
-
-# Install service for locking screen when computer sleeps
-sudo ln -fs "$cwd/lock" /usr/bin/lock
-sudo ln -fs "$cwd/sleeplock.service" /etc/systemd/system/sleeplock.service
-
-# make zsh the default shell
-chsh -s $(which zsh)
-
-# use ntp
-sudo timedatectl set-ntp true
