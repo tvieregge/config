@@ -10,12 +10,8 @@
 # TODO TEMPORARY: This makes it work, but filters out packages from the AUR
 sudo pacman -S --needed $(comm -12 <(pacman -Slq | sort) <(sort pkglist.txt))
 
-#install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-# install NPM
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-#install pure prompt
-npm install --global pure-prompt
+# install zgen
+git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
 
 # Install script to stop screen lock when watching media
 sudo ln -fs "$cwd/keep-awake.sh" /usr/bin/keep-awake
