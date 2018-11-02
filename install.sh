@@ -39,3 +39,5 @@ ln -fs "$cwd/move-cursor-window-center.sh" ~/.i3/move-cursor-window-center.sh
 
 mkdir ~/.config/termite
 ln -fs "$cwd/termite-config" ~/.config/termite/config
+
+ln -fs "$cwd/xfce4-power-manager.xml" ~/.config//home/tim/.config/xfce4/xfconf/xfce-perchannel-xml
