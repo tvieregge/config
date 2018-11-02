@@ -8,12 +8,11 @@
 # The list was generated with pacman -Qqet
 #
 # TODO TEMPORARY: This makes it work, but filters out packages from the AUR
-sudo pacman -S --needed $(comm -12 <(pacman -Slq | sort) <(sort pkglist.txt)) &
-wait $!
+lst=$(comm -12 <(pacman -Slq | sort) <(sort pkglist.txt))
+sudo pacman -S --needed $lst
 
 # install zgen
-git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen" &
-wait $!
+git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
 
 # Install script to stop screen lock when watching media
 sudo ln -fs "$cwd/keep-awake.sh" /usr/bin/keep-awake
