@@ -14,10 +14,10 @@ if ! zgen saved; then
 	zgen save
 fi
 
-# # Only enter passphrase once
-# # Source https://wiki.archlinux.org/index.php/SSH_keys
-# if [ -d ~/.ssh ]; then
-# 	eval $(keychain --eval --quiet id_rsa)
-# fi
+# Only enter passphrase once
+# Source https://wiki.archlinux.org/index.php/SSH_keys
+if [ -d ~/.ssh ]; then
+	eval $(keychain --eval --quiet id_rsa)
+fi
 
-# alias e=$(which nvim)
+alias e=$(which nvim)
