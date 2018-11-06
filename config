@@ -390,3 +390,4 @@ mode "$mode_gaps_outer" {
 }
 
 exec keep-awake.sh
+exec redshift -l 45:-80
