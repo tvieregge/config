@@ -14,12 +14,16 @@ sudo pacman -S --needed $lst
 # install zgen
 git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
 
+DIR=$(dirname "$(readlink -f "$0")")
+echo "------------"
+echo $DIR
+echo "------------"
 # Install script to stop screen lock when watching media
-sudo ln -fs "$cwd/keep-awake.sh" /usr/bin/keep-awake
+sudo ln -fs "$DIR/keep-awake.sh" /usr/bin/keep-awake
 
 # Install service for locking screen when computer sleeps
-sudo ln -fs "$cwd/lock" /usr/bin/lock
-sudo ln -fs "$cwd/sleeplock.service" /etc/systemd/system/sleeplock.service
+sudo ln -fs "$DIR/lock" /usr/bin/lock
+sudo ln -fs "$DIR/sleeplock.service" /etc/systemd/system/sleeplock.service
 
 # make zsh the default shell
 chsh -s $(which zsh)
@@ -28,7 +32,6 @@ chsh -s $(which zsh)
 sudo timedatectl set-ntp true
 
 # install config files
-DIR=$(dirname "$(readlink -f "$0")")
 ln -fs "$DIR/.zshrc" ~/.zshrc
 
 mkdir ~/.config/nvim
@@ -40,4 +43,4 @@ ln -fs "$DIR/move-cursor-window-center.sh" ~/.i3/move-cursor-window-center.sh
 mkdir ~/.config/termite
 ln -fs "$DIR/termite-config" ~/.config/termite/config
 
-ln -fs "$DIR/xfce4-power-manager.xml" ~/.config//home/tim/.config/xfce4/xfconf/xfce-perchannel-xml
+ln -fs "$DIR/xfce4-power-manager.xml" ~/.config/xfce4/xfconf/xfce-perchannel-xml
