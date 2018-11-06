@@ -1,7 +1,7 @@
 # config
 Various application configurations
 
-Run install.sh to install configure a clean manjaro i3 installation (in progress)
+Run install.sh to install configure a clean manjaro i3 installation
 
 ## TODO:
 Genral
