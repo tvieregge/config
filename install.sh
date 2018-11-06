@@ -28,16 +28,16 @@ chsh -s $(which zsh)
 sudo timedatectl set-ntp true
 
 # install config files
-cwd=$(pwd)
-ln -fs "$cwd/.zshrc" ~/.zshrc
+DIR=$(dirname "$(readlink -f "$0")")
+ln -fs "$DIR/.zshrc" ~/.zshrc
 
 mkdir ~/.config/nvim
-ln -fs "$cwd/init.vim" ~/.config/nvim/init.vim
+ln -fs "$DIR/init.vim" ~/.config/nvim/init.vim
 
-ln -fs "$cwd/config" ~/.i3/config
-ln -fs "$cwd/move-cursor-window-center.sh" ~/.i3/move-cursor-window-center.sh
+ln -fs "$DIR/config" ~/.i3/config
+ln -fs "$DIR/move-cursor-window-center.sh" ~/.i3/move-cursor-window-center.sh
 
 mkdir ~/.config/termite
-ln -fs "$cwd/termite-config" ~/.config/termite/config
+ln -fs "$DIR/termite-config" ~/.config/termite/config
 
-ln -fs "$cwd/xfce4-power-manager.xml" ~/.config//home/tim/.config/xfce4/xfconf/xfce-perchannel-xml
+ln -fs "$DIR/xfce4-power-manager.xml" ~/.config//home/tim/.config/xfce4/xfconf/xfce-perchannel-xml
