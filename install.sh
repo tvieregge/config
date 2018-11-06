@@ -14,10 +14,9 @@ sudo pacman -S --needed $lst
 # install zgen
 git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
 
+# Path of script. Needs to be run from
 DIR=$(dirname "$(readlink -f "$0")")
-echo "------------"
-echo $DIR
-echo "------------"
+
 # Install script to stop screen lock when watching media
 sudo ln -fs "$DIR/keep-awake.sh" /usr/bin/keep-awake
 
