@@ -21,3 +21,4 @@ if [ -d ~/.ssh ]; then
 fi
 
 alias e=$(which nvim)
+unalias rm
