@@ -123,10 +123,12 @@ Plug 'mhinz/vim-signify'
 	" let g:signify_vcs_list = [ 'git' ]
 	" let g:signify_cursorhold_normal = 0
 
+Plug 'rafi/awesome-vim-colorschemes'
 Plug 'tpope/vim-sensible'
 Plug 'Raimondi/delimitMate'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
 " Doesn't work, but looks really cool
 "Plug 'shougo/echodoc.vim'
@@ -138,6 +140,7 @@ call plug#end()
 " -----------------------------------------------------------------------------
 hi CharLimit ctermfg=red guifg=red
 match CharLimit /\%>79v.*\%<81v/
+colorscheme onedark
 
 " -----------------------------------------------------------------------------
 "  Search
