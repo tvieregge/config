@@ -9,6 +9,7 @@ set hidden
 set ignorecase
 set smartcase
 set viminfo='100,f1
+se nostartofline
 noremap <F1> <ESC>
 " This is needed for some reason
 inoremap <F1> <ESC>
