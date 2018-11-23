@@ -21,4 +21,5 @@ if [ -d ~/.ssh ]; then
 fi
 
 alias e=$(which nvim)
+alias o=xdg-open
 unalias rm
