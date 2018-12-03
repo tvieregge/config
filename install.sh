@@ -15,7 +15,7 @@ sudo pacman -S --needed $lst
 git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
 
 # Path of script. Needs to be run from
-DIR=$(dirname "$(readlink -f "$0")")
+dir=$(dirname "$(readlink -f "$0")")
 
 # Install script to stop screen lock when watching media
 sudo ln -fs "$DIR/keep-awake.sh" /usr/bin/keep-awake
@@ -43,3 +43,6 @@ mkdir ~/.config/termite
 ln -fs "$DIR/termite-config" ~/.config/termite/config
 
 ln -fs "$DIR/xfce4-power-manager.xml" ~/.config/xfce4/xfconf/xfce-perchannel-xml
+
+mkdir ~/.config/zathura
+ln -fs "$DIR/zathurarc" ~/.config/zathura/zathurarc

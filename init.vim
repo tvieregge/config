@@ -152,5 +152,5 @@ nnoremap <Leader>g :silent lgrep<Space>
 " -----------------------------------------------------------------------------
 " Formatting
 " -----------------------------------------------------------------------------
-set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
+set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 set shiftround
