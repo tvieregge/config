@@ -131,6 +131,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
+Plug 'AndrewRadev/linediff.vim'
+
 " Doesn't work, but looks really cool
 "Plug 'shougo/echodoc.vim'
 

@@ -130,3 +130,4 @@ xorg-xinit
 xorg-xkill
 yaourt
 zathura
+pandoc
