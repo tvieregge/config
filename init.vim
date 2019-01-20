@@ -3,7 +3,6 @@
 " -----------------------------------------------------------------------------
 set nu
 set nowrap
-set relativenumber
 set pastetoggle=<F10>
 set hidden
 set ignorecase
@@ -77,6 +76,10 @@ nnoremap <C-n> :enew<CR>
 nnoremap <leader>s <C-w>v<C-w>l
 nnoremap <leader>h <C-w>s<C-w>j
 
+" vim-unimpared stle, grab a line
+noremap ly :<C-U>exe v:count . "y"<CR>
+noremap lY :<C-U>exe v:count . "Y"<CR>
+
 " -----------------------------------------------------------------------------
 " Plugins 
 " -----------------------------------------------------------------------------
@@ -125,6 +128,16 @@ Plug 'mhinz/vim-signify'
 	" let g:signify_vcs_list = [ 'git' ]
 	" let g:signify_cursorhold_normal = 0
 
+" Haskell
+"--------------------------
+Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
+nnoremap <Leader>g :Ghcid<CR>
+
+Plug 'itchyny/vim-haskell-indent'
+
+" General pluins
+"--------------------------
+
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'tpope/vim-sensible'
 Plug 'Raimondi/delimitMate'
@@ -133,6 +146,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'AndrewRadev/linediff.vim'
+Plug 'tpope/vim-unimpaired'
 
 " Doesn't work, but looks really cool
 "Plug 'shougo/echodoc.vim'
@@ -145,12 +159,6 @@ call plug#end()
 hi CharLimit ctermfg=red guifg=red
 match CharLimit /\%>79v.*\%<81v/
 colorscheme onedark
-
-" -----------------------------------------------------------------------------
-"  Search
-" -----------------------------------------------------------------------------
-set grepprg=rg\ --vimgrep
-nnoremap <Leader>g :silent lgrep<Space>
 
 " -----------------------------------------------------------------------------
 " Formatting
