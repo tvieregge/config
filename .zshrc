@@ -20,6 +20,8 @@ if [ -d ~/.ssh ]; then
 	eval $(keychain --eval --quiet id_rsa)
 fi
 
+PATH=$PATH:~/.local/bin
+
 alias e=$(which nvim)
 alias o=xdg-open
 unalias rm
