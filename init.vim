@@ -135,7 +135,7 @@ Plug 'mhinz/vim-signify'
 " autoformatting
 "--------------------------
 Plug 'Chiel92/vim-autoformat'
-au BufWrite * :Autoformat
+noremap <F3> :Autoformat<CR>
 
 " Haskell
 "--------------------------
