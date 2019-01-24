@@ -59,6 +59,7 @@ if has("autocmd")
 endif
 
 nnoremap <Leader>m :!markdown_previewer %<CR><CR>
+
 " -----------------------------------------------------------------------------
 " Mappings
 " -----------------------------------------------------------------------------
@@ -68,20 +69,23 @@ noremap <Leader>y "+y
 noremap <Leader>p "+p
 inoremap kj <Esc>
 vnoremap kj <Esc>
+
+" Buffers
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-n> :enew<CR>
-nnoremap <leader>s <C-w>v<C-w>l
+nnoremap <C-s> <C-w>v<C-w>l
 nnoremap <leader>h <C-w>s<C-w>j
+nnoremap <leader>l :b#<CR>
 
 " vim-unimpared stle, grab a line
 noremap ly :<C-U>exe v:count . "y"<CR>
 noremap lY :<C-U>exe v:count . "Y"<CR>
 
 " -----------------------------------------------------------------------------
-" Plugins 
+" Plugins
 " -----------------------------------------------------------------------------
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
     silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
@@ -128,14 +132,23 @@ Plug 'mhinz/vim-signify'
 	" let g:signify_vcs_list = [ 'git' ]
 	" let g:signify_cursorhold_normal = 0
 
+" autoformatting
+"--------------------------
+Plug 'Chiel92/vim-autoformat'
+au BufWrite * :Autoformat
+
 " Haskell
 "--------------------------
-Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
-nnoremap <Leader>g :Ghcid<CR>
+" Can't get it to work with testing, just use ghcid extanally for now
+"Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
+" Should be fine as long as I always use stack
+"let g:ghcid_command ="ghcid --test $':l test/Spec.hs \n main'"
+"let g:ghcid_command ="stack ghci cis194:lib cis194:test:cis194-test --ghci-options=-fobject-code\" --test \"main"
+"nnoremap <Leader>g :Ghcid<CR>
 
 Plug 'itchyny/vim-haskell-indent'
 
-" General pluins
+" General plugins
 "--------------------------
 
 Plug 'rafi/awesome-vim-colorschemes'
