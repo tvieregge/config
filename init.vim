@@ -77,12 +77,13 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-n> :enew<CR>
 nnoremap <C-s> <C-w>v<C-w>l
-nnoremap <leader>h <C-w>s<C-w>j
+nnoremap <C-o> <C-w>s<C-w>j
 nnoremap <leader>l :b#<CR>
+nnoremap <C-c> :bp\|bd #<CR>
 
 " vim-unimpared stle, grab a line
-noremap ly :<C-U>exe v:count . "y"<CR>
-noremap lY :<C-U>exe v:count . "Y"<CR>
+noremap gy :<C-U>exe v:count . "y"<CR> <bar> :put<CR>
+noremap gY :<C-U>exe v:count . "y"<CR> <bar> P<CR>
 
 " -----------------------------------------------------------------------------
 " Plugins
@@ -106,7 +107,7 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 let $FZF_DEFAULT_COMMAND = 'rg --files'
-nnoremap ; :Buffers<CR>
+nnoremap m :Buffers<CR>
 nnoremap <Leader>t :Files<CR>
 nnoremap <Leader>r :Tags<CR>
 nnoremap <Leader>d :Rg<CR>
