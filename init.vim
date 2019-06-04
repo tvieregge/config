@@ -107,7 +107,8 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 let $FZF_DEFAULT_COMMAND = 'rg --files'
-nnoremap m :Buffers<CR>
+nnoremap ; :Buffers<CR>
+nnoremap , ;
 nnoremap <Leader>t :Files<CR>
 nnoremap <Leader>r :Tags<CR>
 nnoremap <Leader>d :Rg<CR>
@@ -136,6 +137,8 @@ Plug 'mhinz/vim-signify'
 " autoformatting
 "--------------------------
 Plug 'Chiel92/vim-autoformat'
+let g:formatdef_custom_hindent = '"hindent --indent-size 4"'
+let g:formatters_haskell = ['custom_hindent']
 noremap <F3> :Autoformat<CR>
 
 " Haskell
@@ -148,6 +151,19 @@ noremap <F3> :Autoformat<CR>
 "nnoremap <Leader>g :Ghcid<CR>
 
 Plug 'itchyny/vim-haskell-indent'
+
+" Text editing plugins
+"--------------------------
+Plug 'reedes/vim-pencil'
+let g:pencil#wrapModeDefault = 'soft'
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd,text call pencil#init()
+                            \ | setlocal spell spelllang=en_ca
+                            \ | setlocal spell spelllang=en_ca
+                            \ | syn match myExCapitalWords +\<\w*[A-Z]\K*\>\|'s+ contains=@NoSpell
+augroup END
+let g:extra_whitespace_ignored_filetypes = ['markdown']
 
 " General plugins
 "--------------------------
