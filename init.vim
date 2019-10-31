@@ -170,7 +170,7 @@ let g:extra_whitespace_ignored_filetypes = ['markdown']
 Plug 'psf/black'
 nnoremap <F9> :Black<CR>
 let g:black_fast = 1
-
+autocmd BufWritePre *.py execute ':Black'
 
 " General plugins
 "--------------------------
