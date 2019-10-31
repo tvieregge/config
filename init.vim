@@ -165,6 +165,13 @@ augroup pencil
 augroup END
 let g:extra_whitespace_ignored_filetypes = ['markdown']
 
+" Python
+"--------------------------
+Plug 'psf/black'
+nnoremap <F9> :Black<CR>
+let g:black_fast = 1
+
+
 " General plugins
 "--------------------------
 
@@ -175,9 +182,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'AndrewRadev/linediff.vim'
 Plug 'tpope/vim-unimpaired'
-
 " Doesn't work, but looks really cool
 "Plug 'shougo/echodoc.vim'
 
