@@ -42,7 +42,7 @@ ln -fs "$DIR/move-cursor-window-center.sh" ~/.i3/move-cursor-window-center.sh
 mkdir ~/.config/termite
 ln -fs "$DIR/termite-config" ~/.config/termite/config
 
-ln -fs "$DIR/xfce4-power-manager.xml" ~/.config/xfce4/xfconf/xfce-perchannel-xml
+# ln -fs "$DIR/xfce4-power-manager.xml" ~/.config/xfce4/xfconf/xfce-perchannel-xml
 
 mkdir ~/.config/zathura
 ln -fs "$DIR/zathurarc" ~/.config/zathura/zathurarc
