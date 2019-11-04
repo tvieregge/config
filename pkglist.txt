@@ -34,7 +34,6 @@ terminus-font
 termite
 unrar-free
 viewnior
-virtualbox
 xxd-standalone
 zathura
 pandoc
