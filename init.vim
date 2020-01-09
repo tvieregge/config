@@ -110,7 +110,7 @@ let $FZF_DEFAULT_COMMAND = 'rg --files'
 nnoremap ; :Buffers<CR>
 nnoremap , ;
 nnoremap <Leader>t :Files<CR>
-nnoremap <Leader>r :Tags<CR>
+" nnoremap <Leader>r :Tags<CR>
 nnoremap <Leader>d :Rg<CR>
 nnoremap <Leader>f :Rg <C-R><C-W><CR>
 
@@ -134,12 +134,30 @@ Plug 'mhinz/vim-signify'
 	" let g:signify_vcs_list = [ 'git' ]
 	" let g:signify_cursorhold_normal = 0
 
-" autoformatting
+
+" autocomplete
 "--------------------------
-Plug 'Chiel92/vim-autoformat'
-let g:formatdef_custom_hindent = '"hindent --indent-size 4"'
-let g:formatters_haskell = ['custom_hindent']
-noremap <F3> :Autoformat<CR>
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
 
 " Haskell
 "--------------------------
@@ -150,7 +168,11 @@ noremap <F3> :Autoformat<CR>
 "let g:ghcid_command ="stack ghci cis194:lib cis194:test:cis194-test --ghci-options=-fobject-code\" --test \"main"
 "nnoremap <Leader>g :Ghcid<CR>
 
-Plug 'itchyny/vim-haskell-indent'
+" Plug 'itchyny/vim-haskell-indent'
+" Plug 'Chiel92/vim-autoformat'
+" let g:formatdef_custom_hindent = '"hindent --indent-size 4"'
+" let g:formatters_haskell = ['custom_hindent']
+" noremap <F3> :Autoformat<CR>
 
 " Text editing plugins
 "--------------------------
@@ -172,13 +194,29 @@ nnoremap <F9> :Black<CR>
 let g:black_fast = 1
 autocmd BufWritePre *.py execute ':Black'
 
-" General plugins
+" Languare support
 "--------------------------
 
+Plug 'sheerun/vim-polyglot'
+
+
+" Ranger integration
+"--------------------------
+Plug 'francoiscabrol/ranger.vim'
+Plug 'rbgrouleff/bclose.vim' " dependency for ranger.vim
+
+let g:ranger_map_keys = 0
+map <leader>r :Ranger<CR>
+
+let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
+let g:NERDTreeHijackNetrw = 0  " add this line if you use NERDTree
+let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
+
+" General plugins
+"--------------------------
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'tpope/vim-sensible'
 Plug 'Raimondi/delimitMate'
-Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
@@ -200,3 +238,6 @@ colorscheme onedark
 " -----------------------------------------------------------------------------
 set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 set shiftround
+
+let g:python3_host_prog = "/usr/bin/python3"
+let g:python_host_prog = "/usr/bin/python2"

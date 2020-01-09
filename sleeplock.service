@@ -6,7 +6,7 @@ Before=suspend.target
 User=tim
 Type=forking
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/lock
+ExecStart=/usr/bin/i3lock
 
 [Install]
 WantedBy=suspend.target

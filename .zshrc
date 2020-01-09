@@ -24,4 +24,17 @@ PATH=$PATH:~/.local/bin
 
 alias e=$(which nvim)
 alias o=xdg-open
+alias dbash='docker exec -it `docker ps | sed -n '2p' | cut -d" " -f1` bash'
 unalias rm
+
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+
+# Work stuff
+
+# Secrets
+if [ -f "${HOME}/.zsh_secrets.zsh" ]; then
+    source "${HOME}/.zsh_secrets.zsh"
+fi
+
+export VOLTUSPY_PATH=${HOME}/src/voltus/voltuspy
