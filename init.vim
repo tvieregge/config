@@ -199,6 +199,9 @@ autocmd BufWritePre *.py execute ':Black'
 
 Plug 'sheerun/vim-polyglot'
 
+" Neomake
+"--------------------------
+Plug 'neomake/neomake'
 
 " Ranger integration
 "--------------------------
@@ -225,6 +228,31 @@ Plug 'tpope/vim-unimpaired'
 "Plug 'shougo/echodoc.vim'
 
 call plug#end()
+
+" Neomake
+"--------------------------
+
+" When writing a buffer (no delay), and on normal mode changes (after 1s).
+call neomake#configure#automake('nw', 1000)
+
+" Pylint
+let g:neomake_python_pylint_maker = {
+  \ 'args': [
+  \ '-d', 'C0330',
+  \ '-f', 'text',
+  \ '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg}"',
+  \ '-r', 'n'
+  \ ],
+  \ 'errorformat':
+  \ '%A%f:%l:%c:%t: %m,' .
+  \ '%A%f:%l: %m,' .
+  \ '%A%f:(%l): %m,' .
+  \ '%-Z%p^%.%#,' .
+  \ '%-G%.%#',
+  \ }
+
+let g:neomake_python_enabled_makers = ['pylint']
+
 
 " -----------------------------------------------------------------------------
 " Visuals
