@@ -114,16 +114,6 @@ nnoremap <Leader>t :Files<CR>
 nnoremap <Leader>d :Rg<CR>
 nnoremap <Leader>f :Rg <C-R><C-W><CR>
 
-" NERDTree and controles
-"--------------------------
-Plug 'scrooloose/nerdtree'
-let NERDTreeQuitOnOpen = 1
-nnoremap <Leader>n :NERDTreeToggle<CR>
-
-" Open NERDTree when vim open a dir
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
 " vim-signify options
 "--------------------------
 Plug 'mhinz/vim-signify'
@@ -191,17 +181,11 @@ let g:extra_whitespace_ignored_filetypes = ['markdown']
 "--------------------------
 Plug 'psf/black'
 nnoremap <F9> :Black<CR>
-let g:black_fast = 1
-autocmd BufWritePre *.py execute ':Black'
+" let g:black_fast = 1
+" autocmd BufWritePre *.py execute ':Black'
 
-" Languare support
-"--------------------------
-
-Plug 'sheerun/vim-polyglot'
-
-" Neomake
-"--------------------------
-Plug 'neomake/neomake'
+let g:python3_host_prog = "/usr/bin/python3"
+let g:python_host_prog = "/usr/bin/python2"
 
 " Ranger integration
 "--------------------------
@@ -212,11 +196,26 @@ let g:ranger_map_keys = 0
 map <leader>r :Ranger<CR>
 
 let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
-let g:NERDTreeHijackNetrw = 0  " add this line if you use NERDTree
 let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
+
+" Golang
+"--------------------------
+Plug 'fatih/vim-go'
+" disable vim-go :GoDef short cut (gd)
+" this is handled by LanguageClient [LC]
+let g:go_def_mapping_enabled = 0
+let g:go_fmt_command = "goimports"
+
 
 " General plugins
 "--------------------------
+" Languare support
+Plug 'sheerun/vim-polyglot'
+Plug 'fatih/vim-hclfmt'
+
+" Autorun
+Plug 'neomake/neomake'
+
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'tpope/vim-sensible'
 Plug 'Raimondi/delimitMate'
@@ -224,6 +223,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'tpope/vim-unimpaired'
+Plug 'rhysd/vim-clang-format'
 " Doesn't work, but looks really cool
 "Plug 'shougo/echodoc.vim'
 
@@ -232,26 +232,26 @@ call plug#end()
 " Neomake
 "--------------------------
 
-" When writing a buffer (no delay), and on normal mode changes (after 1s).
-call neomake#configure#automake('nw', 1000)
+ " When writing a buffer (no delay), and on normal mode changes (after 1s).
+ call neomake#configure#automake('nw', 1000)
 
-" Pylint
-let g:neomake_python_pylint_maker = {
-  \ 'args': [
-  \ '-d', 'C0330',
-  \ '-f', 'text',
-  \ '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg}"',
-  \ '-r', 'n'
-  \ ],
-  \ 'errorformat':
-  \ '%A%f:%l:%c:%t: %m,' .
-  \ '%A%f:%l: %m,' .
-  \ '%A%f:(%l): %m,' .
-  \ '%-Z%p^%.%#,' .
-  \ '%-G%.%#',
-  \ }
+ " Pylint
+ let g:neomake_python_pylint_maker = {
+   \ 'args': [
+   \ '-d', 'C0330',
+   \ '-f', 'text',
+   \ '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg}"',
+   \ '-r', 'n'
+   \ ],
+   \ 'errorformat':
+   \ '%A%f:%l:%c:%t: %m,' .
+   \ '%A%f:%l: %m,' .
+   \ '%A%f:(%l): %m,' .
+   \ '%-Z%p^%.%#,' .
+   \ '%-G%.%#',
+   \ }
 
-let g:neomake_python_enabled_makers = ['pylint']
+ let g:neomake_python_enabled_makers = ['pylint']
 
 
 " -----------------------------------------------------------------------------
@@ -267,5 +267,3 @@ colorscheme onedark
 set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 set shiftround
 
-let g:python3_host_prog = "/usr/bin/python3"
-let g:python_host_prog = "/usr/bin/python2"
