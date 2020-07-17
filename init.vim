@@ -128,6 +128,7 @@ Plug 'mhinz/vim-signify'
 " autocomplete
 "--------------------------
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+set updatetime=100
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -148,6 +149,9 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Haskell
 "--------------------------
@@ -182,7 +186,7 @@ let g:extra_whitespace_ignored_filetypes = ['markdown']
 Plug 'psf/black'
 nnoremap <F9> :Black<CR>
 " let g:black_fast = 1
-" autocmd BufWritePre *.py execute ':Black'
+autocmd BufWritePre *.py execute ':Black'
 
 let g:python3_host_prog = "/usr/bin/python3"
 let g:python_host_prog = "/usr/bin/python2"
@@ -206,34 +210,43 @@ Plug 'fatih/vim-go'
 let g:go_def_mapping_enabled = 0
 let g:go_fmt_command = "goimports"
 
+" C
+"--------------------------
+Plug 'rhysd/vim-clang-format'
+let g:clang_format#style_options = {
+    \ "BasedOnStyle" : "mozilla",
+    \ "IndentWidth" : "4",
+    \ "ColumnLimit" : "100" }
+
+autocmd FileType c,cpp,objc  ClangFormatAutoEnable
+
+" Basic languare support
+"--------------------------
+Plug 'sheerun/vim-polyglot'
+Plug 'fatih/vim-hclfmt'
 
 " General plugins
 "--------------------------
-" Languare support
-Plug 'sheerun/vim-polyglot'
-Plug 'fatih/vim-hclfmt'
 
 " Autorun
 Plug 'neomake/neomake'
 
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'tpope/vim-sensible'
-Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'tpope/vim-unimpaired'
-Plug 'rhysd/vim-clang-format'
-" Doesn't work, but looks really cool
-"Plug 'shougo/echodoc.vim'
+Plug 'cohama/lexima.vim'
+Plug 'ruanyl/vim-gh-line'
 
 call plug#end()
 
 " Neomake
 "--------------------------
 
- " When writing a buffer (no delay), and on normal mode changes (after 1s).
- call neomake#configure#automake('nw', 1000)
+ " When writing a buffer (no delay), and on normal mode changes (after 30s).
+ call neomake#configure#automake('nw', 30000)
 
  " Pylint
  let g:neomake_python_pylint_maker = {
