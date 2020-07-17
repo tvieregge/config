@@ -11,6 +11,9 @@
 lst=$(comm -12 <(pacman -Slq | sort) <(sort pkglist.txt))
 sudo pacman -S --needed $lst
 
+# TODO: move everything here
+mkdir -p ~/.local/share/config
+
 # install zgen
 git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
 
@@ -46,3 +49,5 @@ ln -fs "$DIR/termite-config" ~/.config/termite/config
 
 mkdir ~/.config/zathura
 ln -fs "$DIR/zathurarc" ~/.config/zathura/zathurarc
+
+sudo ln -fs "$DIR/escswap" ~/.local/share/config/escswap
