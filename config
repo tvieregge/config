@@ -391,4 +391,4 @@ mode "$mode_gaps_outer" {
 
 exec keep-awake.sh
 exec redshift -l 45:-80 -t 6500:3500
-exec xmodmap ~/.local/share/escswap
+exec xmodmap ~/.local/share/config/escswap
