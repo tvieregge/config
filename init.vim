@@ -183,13 +183,11 @@ let g:extra_whitespace_ignored_filetypes = ['markdown']
 
 " Python
 "--------------------------
-Plug 'psf/black'
+Plug 'psf/black', { 'tag': '19.10b0' }
 nnoremap <F9> :Black<CR>
 " let g:black_fast = 1
 autocmd BufWritePre *.py execute ':Black'
 
-let g:python3_host_prog = "/usr/bin/python3"
-let g:python_host_prog = "/usr/bin/python2"
 
 " Ranger integration
 "--------------------------
