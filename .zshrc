@@ -32,6 +32,8 @@ unalias rm
 export HISTSIZE=100000
 export HISTFILESIZE=100000
 
+MNML_INFOLN=(mnml_err mnml_jobs)
+
 # Work stuff
 
 # Secrets

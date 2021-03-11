@@ -82,8 +82,12 @@ nnoremap <leader>l :b#<CR>
 nnoremap <C-c> :bp\|bd #<CR>
 
 " vim-unimpared stle, grab a line
+" currently overriden by coc
 noremap gy :<C-U>exe v:count . "y"<CR> <bar> :put<CR>
 noremap gY :<C-U>exe v:count . "y"<CR> <bar> P<CR>
+
+" :nnoremap date "=strftime("%c")<CR>P
+" :inoremap date <C-R>=strftime("%c")<CR>
 
 " -----------------------------------------------------------------------------
 " Plugins
@@ -187,6 +191,8 @@ Plug 'psf/black', { 'tag': '19.10b0' }
 nnoremap <F9> :Black<CR>
 " let g:black_fast = 1
 autocmd BufWritePre *.py execute ':Black'
+
+Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 
 
 " Ranger integration

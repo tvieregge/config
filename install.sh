@@ -51,3 +51,4 @@ mkdir ~/.config/zathura
 ln -fs "$DIR/zathurarc" ~/.config/zathura/zathurarc
 
 sudo ln -fs "$DIR/escswap" ~/.local/share/config/escswap
+sudo ln -s "$DIR/.zprofile" ~/.zprofile
