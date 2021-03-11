@@ -52,3 +52,6 @@ ln -fs "$DIR/zathurarc" ~/.config/zathura/zathurarc
 
 sudo ln -fs "$DIR/escswap" ~/.local/share/config/escswap
 sudo ln -s "$DIR/.zprofile" ~/.zprofile
+
+mkdir ~/.config/i3status
+ln -s $DIR/i3status.conf ~/.config/i3status/config
