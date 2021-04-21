@@ -18,6 +18,7 @@ fi
 # Source https://wiki.archlinux.org/index.php/SSH_keys
 if [ -d ~/.ssh ]; then
 	eval $(keychain --eval --quiet id_rsa)
+	eval $(keychain --eval --quiet skeleton.pem)
     # see .ssh/config for ssh logins
 fi
 
