@@ -18,7 +18,6 @@ fi
 # Source https://wiki.archlinux.org/index.php/SSH_keys
 if [ -d ~/.ssh ]; then
 	eval $(keychain --eval --quiet id_rsa)
-	eval $(keychain --eval --quiet skeleton.pem)
     # see .ssh/config for ssh logins
 fi
 
@@ -29,6 +28,7 @@ alias e=$(which nvim)
 alias o=xdg-open
 alias dsh='docker exec -it `docker ps | sed -n '2p' | cut -d" " -f1` sh'
 unalias rm
+alias big-files='du -shx * | sort -rh | head -10'
 
 export HISTSIZE=100000
 export HISTFILESIZE=100000
