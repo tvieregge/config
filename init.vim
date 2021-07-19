@@ -60,6 +60,12 @@ endif
 
 nnoremap <Leader>m :!markdown_previewer %<CR><CR>
 
+" Start a new change before c-u/g in insert mode.
+" Makes it easier to recover from accidental deletion
+" see: https://vim.fandom.com/wiki/Recover_from_accidental_Ctrl-U
+inoremap <c-u> <c-g>u<c-u>
+inoremap <c-w> <c-g>u<c-w>
+
 " -----------------------------------------------------------------------------
 " Mappings
 " -----------------------------------------------------------------------------
