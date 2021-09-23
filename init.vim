@@ -77,16 +77,16 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-n> :enew<CR>
 nnoremap <C-s> <C-w>v<C-w>l
-nnoremap <C-o> <C-w>s<C-w>j
+nnoremap <C-a> <C-w>s<C-w>j
 nnoremap <leader>l :b#<CR>
 nnoremap <C-c> :bp\|bd #<CR>
 
 " vim-unimpared stle, grab a line
 " currently overriden by coc
-noremap gy :<C-U>exe v:count . "y"<CR> <bar> :put<CR>
-noremap gY :<C-U>exe v:count . "y"<CR> <bar> P<CR>
+" noremap gy :<C-U>exe v:count . "y"<CR> <bar> :put<CR>
+" noremap gY :<C-U>exe v:count . "y"<CR> <bar> P<CR>
 
-" :nnoremap date "=strftime("%c")<CR>P
+:nnoremap date "=strftime("%c")<CR>p
 " :inoremap date <C-R>=strftime("%c")<CR>
 
 " -----------------------------------------------------------------------------
@@ -178,7 +178,7 @@ Plug 'reedes/vim-pencil'
 let g:pencil#wrapModeDefault = 'soft'
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd,text call pencil#init()
+  autocmd FileType rst,markdown,mkd,text call pencil#init()
                             \ | setlocal spell spelllang=en_ca
                             \ | setlocal spell spelllang=en_ca
                             \ | syn match myExCapitalWords +\<\w*[A-Z]\K*\>\|'s+ contains=@NoSpell
@@ -226,7 +226,7 @@ autocmd FileType c,cpp,objc  ClangFormatAutoEnable
 
 " Basic languare support
 "--------------------------
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'fatih/vim-hclfmt'
 
 " General plugins
@@ -243,6 +243,7 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'tpope/vim-unimpaired'
 Plug 'cohama/lexima.vim'
 Plug 'ruanyl/vim-gh-line'
+Plug 'mechatroner/rainbow_csv'
 
 call plug#end()
 

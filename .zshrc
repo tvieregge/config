@@ -29,6 +29,8 @@ alias e=$(which nvim)
 alias o=xdg-open
 alias dsh='docker exec -it `docker ps | sed -n '2p' | cut -d" " -f1` sh'
 unalias rm
+alias cdf='cd ~/src/voltus/voltuspy/voltapp-flask'
+alias gcm='git checkout main'
 
 export HISTSIZE=100000
 export HISTFILESIZE=100000
