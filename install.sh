@@ -55,3 +55,14 @@ sudo ln -s "$DIR/.zprofile" ~/.zprofile
 
 mkdir ~/.config/i3status
 ln -s $DIR/i3status.conf ~/.config/i3status/config
+
+# install mons
+# See https://github.com/Ventto/mons/issues/48
+git clone git@github.com:EugenMayer/mons-git.git
+cd mons-git
+makepkg
+sudo pacman -U mons-git-r120.375bbba-1-any.pkg.tar.zst
+
+# install the mscript mons runs
+sudo ln -s $DIR/mons-single-display.sh /usr/local/sbin/mons-single-display.sh
+chmod +x /usr/local/sbin/mons-single-display.sh
