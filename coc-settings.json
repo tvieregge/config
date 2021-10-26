@@ -1,0 +1,13 @@
+{
+  "suggest.maxCompleteItemCount": 10,
+  /* this was set before, not sure why... */
+  /* "python.jediEnabled": false, */
+
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"]
+    }
+  }
+}
