@@ -54,6 +54,9 @@ bindsym $mod+Ctrl+m exec pavucontrol
 # bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
+# Calculator button
+bindsym XF86Calculator exec "i3-sensible-terminal -e calc"
+
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F2 exec firefox
@@ -282,7 +285,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
-#  exec --no-startup-id pamac-tray
+exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
 # exec --no-startup-id blueman
 # exec_always --no-startup-id sbxkb
@@ -391,3 +394,5 @@ mode "$mode_gaps_outer" {
 
 exec keep-awake.sh
 exec redshift -l 45:-80 -t 6500:3500
+exec xmodmap ~/src/config/escswap
+exec xmodmap ~/src/config/enterswap

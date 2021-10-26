@@ -17,7 +17,7 @@ fi
 # Only enter passphrase once
 # Source https://wiki.archlinux.org/index.php/SSH_keys
 if [ -d ~/.ssh ]; then
-	eval $(keychain --eval --quiet id_rsa)
+	eval $(keychain --eval --quiet id_ed25519)
     # see .ssh/config for ssh logins
 fi
 
@@ -34,6 +34,8 @@ export HISTSIZE=100000
 export HISTFILESIZE=100000
 
 MNML_INFOLN=(mnml_err mnml_jobs)
+
+export EDITOR=nvim
 
 # Work stuff
 
