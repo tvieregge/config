@@ -396,4 +396,4 @@ exec keep-awake.sh
 exec redshift -l 45:-80 -t 6500:3500
 exec "nohup mons -a -x \"/home/tim/src/config/mons-single-display.sh\" > /dev/null 2>&1 &"
 exec xmodmap ~/src/config/escswap
-exec xmodmap ~/src/config/enterswap
+exec xmodmap ~/src/config/righthand_swap

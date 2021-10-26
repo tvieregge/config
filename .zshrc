@@ -37,6 +37,9 @@ export HISTFILESIZE=100000
 
 MNML_INFOLN=(mnml_err mnml_jobs)
 
+export EDITOR=nvim
+export TERM=termite
+
 # Work stuff
 
 # Secrets
