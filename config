@@ -54,6 +54,9 @@ bindsym $mod+Ctrl+m exec pavucontrol
 # bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
+# Calculator button
+bindsym XF86Calculator exec "i3-sensible-terminal -e calc"
+
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F2 exec firefox
@@ -392,3 +395,5 @@ mode "$mode_gaps_outer" {
 exec keep-awake.sh
 exec redshift -l 45:-80 -t 6500:3500
 exec "nohup mons -a -x \"/home/tim/src/config/mons-single-display.sh\" > /dev/null 2>&1 &"
+exec xmodmap ~/src/config/escswap
+exec xmodmap ~/src/config/enterswap
