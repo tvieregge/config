@@ -55,3 +55,5 @@ sudo ln -s "$DIR/.zprofile" ~/.zprofile
 
 mkdir ~/.config/i3status
 ln -s $DIR/i3status.conf ~/.config/i3status/config
+
+sudo ln -s /home/tim/src/config/trackpad_fix.sh /lib/systemd/system-sleep/
