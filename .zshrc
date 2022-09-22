@@ -51,3 +51,11 @@ alias docker-machine-eval='eval $(docker-machine env rtpoller-production) && PRO
 export VOLTUSPY_PATH=${HOME}/src/voltus/voltuspy
 export VOLTUS=${HOME}/src/voltus
 export DOCKER_BUILDKIT=1
+
+setopt extended_glob
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/terraform terraform
+alias tf=terraform
+
+complete -o nospace -C /usr/bin/nomad nomad

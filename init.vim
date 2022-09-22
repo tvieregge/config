@@ -227,7 +227,9 @@ autocmd FileType c,cpp,objc  ClangFormatAutoEnable
 " Basic languare support
 "--------------------------
 " Plug 'sheerun/vim-polyglot'
-Plug 'fatih/vim-hclfmt'
+Plug 'hashivim/vim-terraform'
+" Plug 'jvirtanen/vim-hcl'
+let g:terraform_fmt_on_save = 1
 
 " General plugins
 "--------------------------
