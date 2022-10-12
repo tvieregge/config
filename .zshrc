@@ -10,6 +10,7 @@ if ! zgen saved; then
 	zgen oh-my-zsh plugins/dircycle
 	zgen oh-my-zsh plugins/fzf
 	zgen load subnixr/minimal
+    zgen load kevinywlui/zlong_alert.zsh
 
 	zgen save
 fi
