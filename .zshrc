@@ -1,4 +1,4 @@
-zmodload zsh/zprof
+# zmodload zsh/zprof
 # load zgen
 source "${HOME}/.zgen/zgen.zsh"
 
@@ -19,7 +19,8 @@ fi
 # Source https://wiki.archlinux.org/index.php/SSH_keys
 if [ -d ~/.ssh ]; then
 	eval $(keychain --eval --quiet id_rsa)
-	eval $(keychain --eval --quiet skeleton.pem)
+    eval $(vault-vals prod voltlet.SKELETON_PEM_PASSWORD)
+    echo SKELETON_PEM_PASSWORD | keychain --quiet skeleton.pem
     # see .ssh/config for ssh logins
 fi
 
@@ -35,6 +36,7 @@ alias gcm='git checkout main'
 
 export HISTSIZE=100000
 export HISTFILESIZE=100000
+export VOLTUS=~/src/voltus
 
 MNML_INFOLN=(mnml_err mnml_jobs)
 
@@ -59,4 +61,35 @@ autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
 alias tf=terraform
 
+function nomad_auth {
+    vault-vals $1 NOMAD_TOKEN 'nomad ui -authenticate'
+}
+
+vd () {
+        VAULT_ADDR=$VAULT_ADDR_DEV VAULT_TOKEN=$(cat ~/.voltus/dev_vault_token) vault $@
+}
+
+vp () {
+        VAULT_ADDR=$VAULT_ADDR_PROD VAULT_TOKEN=$(cat ~/.voltus/prod_vault_token) vault $@
+}
+
+vssh () {
+    ssh voltus@$@ -p 7007
+}
+
 complete -o nospace -C /usr/bin/nomad nomad
+export NPM_PREFIX=~/.npm-packages
+export PATH=$NPM_PREFIX/bin:$PATH
+
+# Enable pyenv
+if [[ "${PYENV_ROOT:-""}" == "" ]]; then
+  export PYENV_ROOT=$HOME/.pyenv
+  export PATH=$PYENV_ROOT/bin:$PATH
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+
+# . /opt/asdf-vm/asdf.sh
+# source /usr/share/nvm/init-nvm.sh
+# zprof
