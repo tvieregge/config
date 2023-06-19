@@ -75,6 +75,8 @@ bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # focus_follows_mouse no
 
+focus_wrapping workspace
+
 # change focus
 bindsym $mod+h exec "~/.i3/move-cursor-window-center.sh focus left"
 bindsym $mod+j exec "~/.i3/move-cursor-window-center.sh focus down"
