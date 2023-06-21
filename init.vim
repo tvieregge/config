@@ -222,7 +222,7 @@ let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 " let g:go_def_mapping_enabled = 0
 " let g:go_fmt_command = "goimports"
 
-" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'neovim/nvim-lspconfig'
 " Plug 'ray-x/go.nvim'
 " " recommended if need floating window support
@@ -232,6 +232,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'kevinhwang91/nvim-bqf'
 
 
 
@@ -259,7 +260,6 @@ let g:terraform_fmt_on_save = 1
 " Autorun
 " Plug 'neomake/neomake'
 
-Plug 'rafi/awesome-vim-colorschemes'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -268,6 +268,13 @@ Plug 'tpope/vim-unimpaired'
 Plug 'ruanyl/vim-gh-line'
 Plug 'mechatroner/rainbow_csv'
 Plug 'mtdl9/vim-log-highlighting'
+
+"Colorschemes
+"--------------------------
+Plug 'navarasu/onedark.nvim'
+Plug 'savq/melange-nvim'
+Plug 'cpea2506/one_monokai.nvim'
+Plug 'mcchrish/zenbones.nvim'
 
 call plug#end()
 
@@ -303,7 +310,16 @@ call plug#end()
 " -----------------------------------------------------------------------------
 hi CharLimit ctermfg=red guifg=red
 match CharLimit /\%>79v.*\%<81v/
-colorscheme onedark
+
+lua <<EOF
+require('onedark').setup {
+    -- toggle theme style ---
+    toggle_style_key = "<leader>ts",
+    toggle_style_list = {'darker', 'warmer' }, -- List of styles to toggle between
+    style = 'warmer'
+}
+require('onedark').load()
+EOF
 
 " -----------------------------------------------------------------------------
 " Formatting
@@ -315,7 +331,7 @@ lua require'lspconfig'.gopls.setup{}
 lua vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 lua vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 lua vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-lua vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+" lua vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 lua <<EOF
 -- Use LspAttach autocommand to only map the following keys
@@ -324,7 +340,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
     -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+    -- " vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -343,9 +359,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<space>f', function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
+    --vim.keymap.set('n', '<space>f', function()
+    --  vim.lsp.buf.format { async = true }
+    --end, opts)
   end,
 })
 
@@ -369,7 +385,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
+      --['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.abort(),
       ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
@@ -393,15 +409,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
     })
   })
 
-  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
   --[[
+  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
       { name = 'buffer' }
     }
   })
-  --]]
 
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline(':', {
@@ -412,6 +427,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       { name = 'cmdline' }
     })
   })
+  --]]
 
   -- Set up lspconfig.
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -419,4 +435,45 @@ vim.api.nvim_create_autocmd('LspAttach', {
   require('lspconfig')['gopls'].setup {
     capabilities = capabilities
   }
+
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the five listed parsers should always be installed)
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "sql", "python", "go", "rust", "javascript", "typescript" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  -- Tim: I don't, but lets see if it causes issues for now
+  auto_install = true,
+
+  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+  highlight = {
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    disable = {},
+    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+    disable = function(lang, buf)
+        local max_filesize = 100 * 1024 -- 100 KB
+        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+            return true
+        end
+    end,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+
 EOF
