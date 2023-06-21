@@ -26,8 +26,8 @@ nnoremap j gj
 nnoremap k gk
 
 " Hitting '%' is hard
-nnoremap <tab> %
-vnoremap <tab> %
+" nnoremap <tab> %
+" vnoremap <tab> %
 
 " Search for highlighted, * and # for fwd/back search
 function! s:getSelectedText()
@@ -67,8 +67,8 @@ noremap <Leader>w :w<CR>
 noremap <Leader>q :q<CR>
 noremap <Leader>y "+y
 noremap <Leader>p "+p
-inoremap kj <Esc>
-vnoremap kj <Esc>
+" inoremap kj <Esc> " cause an annoyin pause when hitting 'k', not needed
+" vnoremap kj <Esc>
 
 " Buffers
 nnoremap <C-h> <C-w>h
@@ -131,31 +131,39 @@ Plug 'mhinz/vim-signify'
 
 " autocomplete
 "--------------------------
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-set updatetime=100
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" set updatetime=100
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" " Use tab for trigger completion with characters ahead and navigate.
+" " NOTE: There's always complete item selected by default, you may want to enable
+" " no select by `"suggest.noselect": true` in your configuration file.
+" " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" " other plugin before putting this into your config.
+" inoremap <silent><expr> <TAB>
+"       \ coc#pum#visible() ? coc#pum#next(1) :
+"       \ CheckBackspace() ? "\<Tab>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" " Make <CR> to accept selected completion item or notify coc.nvim to format
+" " <C-g>u breaks current undo, please make your own choice.
+" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" function! CheckBackspace() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" " Remap keys for gotos
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+
+" " Use `[g` and `]g` to navigate diagnostics
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Haskell
 "--------------------------
@@ -187,10 +195,10 @@ let g:extra_whitespace_ignored_filetypes = ['markdown']
 
 " Python
 "--------------------------
-Plug 'psf/black', { 'tag': '19.10b0' }
-nnoremap <F9> :Black<CR>
+" Plug 'psf/black', { 'tag': '19.10b0' }
+" nnoremap <F9> :Black<CR>
 " let g:black_fast = 1
-autocmd BufWritePre *.py execute ':Black'
+" autocmd BufWritePre *.py execute ':Black'
 
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 
@@ -208,11 +216,25 @@ let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 
 " Golang
 "--------------------------
-Plug 'fatih/vim-go'
+" Plug 'fatih/vim-go'
 " disable vim-go :GoDef short cut (gd)
 " this is handled by LanguageClient [LC]
-let g:go_def_mapping_enabled = 0
-let g:go_fmt_command = "goimports"
+" let g:go_def_mapping_enabled = 0
+" let g:go_fmt_command = "goimports"
+
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'neovim/nvim-lspconfig'
+" Plug 'ray-x/go.nvim'
+" " recommended if need floating window support
+" Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
+" Plug 'ray-x/navigator.lua'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+
+
+
 
 " C
 "--------------------------
@@ -235,7 +257,7 @@ let g:terraform_fmt_on_save = 1
 "--------------------------
 
 " Autorun
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
 
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'tpope/vim-sensible'
@@ -243,17 +265,19 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'tpope/vim-unimpaired'
-Plug 'cohama/lexima.vim'
 Plug 'ruanyl/vim-gh-line'
 Plug 'mechatroner/rainbow_csv'
+Plug 'mtdl9/vim-log-highlighting'
 
 call plug#end()
 
+
+" Pretty sure this is entirely superseded by coc-jedi
 " Neomake
 "--------------------------
 
  " When writing a buffer (no delay), and on normal mode changes (after 30s).
- call neomake#configure#automake('nw', 30000)
+ " call neomake#configure#automake('nw', 30000)
 
  " Pylint
  let g:neomake_python_pylint_maker = {
@@ -287,3 +311,41 @@ colorscheme onedark
 set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 set shiftround
 
+lua require'lspconfig'.gopls.setup{}
+lua vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+lua vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+lua vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+lua vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+lua <<EOF
+-- Use LspAttach autocommand to only map the following keys
+-- after the language server attaches to the current buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<space>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, opts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<space>f', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
+EOF
