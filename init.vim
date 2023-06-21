@@ -431,8 +431,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
   -- Set up lspconfig.
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
   require('lspconfig')['gopls'].setup {
+    capabilities = capabilities
+  }
+  require('lspconfig')['pyright'].setup {
+    capabilities = capabilities
+  }
+  require('lspconfig')['tsserver'].setup {
     capabilities = capabilities
   }
 
