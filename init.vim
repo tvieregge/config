@@ -214,14 +214,6 @@ map <leader>r :Ranger<CR>
 let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
 let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 
-" Golang
-"--------------------------
-" Plug 'fatih/vim-go'
-" disable vim-go :GoDef short cut (gd)
-" this is handled by LanguageClient [LC]
-" let g:go_def_mapping_enabled = 0
-" let g:go_fmt_command = "goimports"
-
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'neovim/nvim-lspconfig'
 " Plug 'ray-x/go.nvim'
@@ -319,6 +311,10 @@ require('onedark').setup {
     style = 'warmer'
 }
 require('onedark').load()
+
+require'bqf'.setup({
+    preview = {winblend = 0}
+})
 EOF
 
 " -----------------------------------------------------------------------------
@@ -332,6 +328,9 @@ lua vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 lua vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 lua vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 " lua vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+" format on save
+autocmd BufWritePre * lua vim.lsp.buf.format()
 
 lua <<EOF
 -- Use LspAttach autocommand to only map the following keys
@@ -481,4 +480,11 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+-- format imports on save
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*.go',
+  callback = function()
+    vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
+  end
+})
 EOF
