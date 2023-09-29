@@ -60,6 +60,9 @@ endif
 
 nnoremap <Leader>m :!markdown_previewer %<CR><CR>
 
+" Line up columns in the current file
+nnoremap <Leader>c :%!column -t<CR>
+
 " -----------------------------------------------------------------------------
 " Mappings
 " -----------------------------------------------------------------------------
@@ -115,7 +118,7 @@ nnoremap ; :Buffers<CR>
 nnoremap , ;
 nnoremap <Leader>t :Files<CR>
 " nnoremap <Leader>r :Tags<CR>
-nnoremap <Leader>d :Rg<CR>
+nnoremap <Leader>s :Rg<CR>
 nnoremap <Leader>f :Rg <C-R><C-W><CR>
 
 " vim-signify options
@@ -323,10 +326,11 @@ EOF
 set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 set shiftround
 
+lua require'lspconfig'.golangci_lint_ls.setup{}
 lua require'lspconfig'.gopls.setup{}
-lua vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-lua vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-lua vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+lua vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+lua vim.keymap.set('n', '<leader>d', vim.diagnostic.goto_prev)
+lua vim.keymap.set('n', '<leader>d', vim.diagnostic.goto_next)
 " lua vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 " format on save
@@ -348,7 +352,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
     vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
     vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
     vim.keymap.set('n', '<space>wl', function()
@@ -437,6 +441,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     capabilities = capabilities
   }
   require('lspconfig')['tsserver'].setup {
+    capabilities = capabilities
+  }
+  require('lspconfig')['golangci_lint_ls'].setup {
     capabilities = capabilities
   }
 
