@@ -271,6 +271,13 @@ Plug 'savq/melange-nvim'
 Plug 'cpea2506/one_monokai.nvim'
 Plug 'mcchrish/zenbones.nvim'
 
+"Autoformat on save - JS only
+"--------------------------
+Plug 'sbdchd/neoformat'
+let g:neoformat_try_node_exe = 1
+" autocmd BufWritePre *.js,*.tsx Neoformat
+
+
 call plug#end()
 
 
@@ -334,7 +341,7 @@ lua vim.keymap.set('n', '<leader>d', vim.diagnostic.goto_next)
 " lua vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 " format on save
-autocmd BufWritePre * lua vim.lsp.buf.format()
+" autocmd BufWritePre * lua vim.lsp.buf.format()
 
 lua <<EOF
 -- Use LspAttach autocommand to only map the following keys
