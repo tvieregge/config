@@ -208,13 +208,9 @@ Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build'
 
 " Ranger integration
 "--------------------------
-Plug 'francoiscabrol/ranger.vim'
-Plug 'rbgrouleff/bclose.vim' " dependency for ranger.vim
+Plug 'kelly-lin/ranger.nvim'
+nmap <leader>r :Ranger<CR>
 
-let g:ranger_map_keys = 0
-map <leader>r :Ranger<CR>
-
-let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
 let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -275,7 +271,7 @@ Plug 'mcchrish/zenbones.nvim'
 "--------------------------
 Plug 'sbdchd/neoformat'
 let g:neoformat_try_node_exe = 1
-" autocmd BufWritePre *.js,*.tsx Neoformat
+autocmd BufWritePre *.js,*.tsx Neoformat
 
 
 call plug#end()
@@ -316,7 +312,7 @@ match CharLimit /\%>79v.*\%<81v/
 lua <<EOF
 require('onedark').setup {
     -- toggle theme style ---
-    toggle_style_key = "<leader>ts",
+    toggle_style_key = "<leader>cs",
     toggle_style_list = {'darker', 'warmer' }, -- List of styles to toggle between
     style = 'warmer'
 }
@@ -410,7 +406,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     })
   })
 
-  -- Set configuration for specific filetype.
+-- Set configuration for specific filetype.
   cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
       { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
@@ -493,6 +489,26 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+-- This is mostly just setting things to the defaults
+local ranger_nvim = require("ranger-nvim")
+ranger_nvim.setup({
+  enable_cmds = true,
+  replace_netrw = true,
+  keybinds = {
+    ["ov"] = ranger_nvim.OPEN_MODE.vsplit,
+    ["oh"] = ranger_nvim.OPEN_MODE.split,
+    ["ot"] = ranger_nvim.OPEN_MODE.tabedit,
+    ["or"] = ranger_nvim.OPEN_MODE.rifle,
+  },
+  ui = {
+    border = "none",
+    height = 1,
+    width = 1,
+    x = 0.5,
+    y = 0.5,
+  }
+})
 
 -- format imports on save
 vim.api.nvim_create_autocmd('BufWritePre', {
