@@ -58,7 +58,8 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
-nnoremap <Leader>m :!markdown_previewer %<CR><CR>
+" This is broken. Reusing the key map
+" nnoremap <Leader>m :!markdown_previewer %<CR><CR>
 
 " Line up columns in the current file
 nnoremap <Leader>c :%!column -t<CR>
@@ -79,18 +80,17 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-n> :enew<CR>
-nnoremap <C-s> <C-w>v<C-w>l
-nnoremap <C-a> <C-w>s<C-w>j
+" nnoremap <C-s> <C-w>v<C-w>l
+" nnoremap <C-a> <C-w>s<C-w>j
 nnoremap <leader>l :b#<CR>
 nnoremap <C-c> :bp\|bd #<CR>
+nnoremap <BS> <C-6>
 
 " vim-unimpared stle, grab a line
-" currently overriden by coc
-" noremap gy :<C-U>exe v:count . "y"<CR> <bar> :put<CR>
-" noremap gY :<C-U>exe v:count . "y"<CR> <bar> P<CR>
+noremap gy :<C-U>exe v:count . "y"<CR> <bar> :put<CR>
+noremap gY :<C-U>exe v:count . "y"<CR> <bar> P<CR>
 
 :nnoremap date "=strftime("%c")<CR>p
-" :inoremap date <C-R>=strftime("%c")<CR>
 
 " -----------------------------------------------------------------------------
 " Plugins
@@ -203,17 +203,50 @@ let g:extra_whitespace_ignored_filetypes = ['markdown']
 " let g:black_fast = 1
 " autocmd BufWritePre *.py execute ':Black'
 
-Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build' }
+" Pretty sure this is superceded: Fri 05 Apr 2024 04:10:37 PM EDT
+" Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 
 
 " Ranger integration
 "--------------------------
-Plug 'kelly-lin/ranger.nvim'
-nmap <leader>r :Ranger<CR>
+Plug 'kevinhwang91/rnvimr'
+nnoremap <Leader>r :RnvimrToggle<CR>
+tnoremap <Leader>r <C-\><C-n>:RnvimrResize<CR> " Redoing the command resizes. Esc to exit
+let g:rnvimr_enable_ex = 1 " Make Ranger replace Netrw and be the file explorer
+let g:rnvimr_enable_picker = 1 " Make Ranger to be hidden after picking a file
+let g:rnvimr_edit_cmd = 'drop' " Replace `$EDITOR` candidate with this command to open the selected file
+let g:rnvimr_draw_border = 0 " Disable a border for floating window
+let g:rnvimr_hide_gitignore = 1 " Hide the files included in gitignore
+let g:rnvimr_enable_bw = 1 " Make Neovim wipe the buffers corresponding to the files deleted by Ranger
 
-let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
+" Fullscreen for initial layout
+let g:rnvimr_layout = {
+           \ 'relative': 'editor',
+           \ 'width': &columns,
+           \ 'height': &lines-2,
+           \ 'col': 0,
+           \ 'row': 0,
+           \ 'style': 'minimal'
+           \ }
+
+let g:rnvimr_presets = [
+            \ {},
+            \ {'width': 0.600, 'height': 0.600}
+            \ ]
+
+
+" Key mappings
+let g:rnvimr_action = {
+            \ '<C-t>': 'NvimEdit tabedit',
+            \ '<C-a>': 'NvimEdit split',
+            \ '<C-s>': 'NvimEdit vsplit',
+            \ 'gw': 'JumpNvimCwd',
+            \ 'yw': 'EmitRangerCwd'
+            \ }
+
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'neovim/nvim-lspconfig'
 " Plug 'ray-x/go.nvim'
 " " recommended if need floating window support
@@ -221,9 +254,12 @@ Plug 'neovim/nvim-lspconfig'
 " Plug 'ray-x/navigator.lua'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'kevinhwang91/nvim-bqf'
+" Plug 'bling/vim-bufferline'
 
 
 
@@ -267,11 +303,12 @@ Plug 'savq/melange-nvim'
 Plug 'cpea2506/one_monokai.nvim'
 Plug 'mcchrish/zenbones.nvim'
 
-"Autoformat on save - JS only
+"Autoformat on save - JS,Go only
 "--------------------------
 Plug 'sbdchd/neoformat'
 let g:neoformat_try_node_exe = 1
-autocmd BufWritePre *.js,*.tsx Neoformat
+autocmd BufWritePre *.go Neoformat
+" autocmd BufWritePre *.go,*.js,*.tsx Neoformat
 
 
 call plug#end()
@@ -323,13 +360,17 @@ require'bqf'.setup({
 })
 EOF
 
+set title
+
 " -----------------------------------------------------------------------------
 " Formatting
 " -----------------------------------------------------------------------------
-set expandtab tabstop=4 softtabstop=4 shiftwidth=4
+
+" No longer needed with lsp formatting
+" set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 set shiftround
 
-lua require'lspconfig'.golangci_lint_ls.setup{}
+" lua require'lspconfig'.golangci_lint_ls.setup{}
 lua require'lspconfig'.gopls.setup{}
 lua vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 lua vim.keymap.set('n', '<leader>d', vim.diagnostic.goto_prev)
@@ -342,6 +383,10 @@ lua vim.keymap.set('n', '<leader>d', vim.diagnostic.goto_next)
 lua <<EOF
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
+function def_in_new_split (opts)
+	vim.cmd('vsplit')
+	vim.lsp.buf.definition(opts)
+end
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
@@ -354,7 +399,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local opts = { buffer = ev.buf }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gsd', def_in_new_split, opts)
+    vim.keymap.set('n', '<space>h', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
     vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
@@ -362,8 +408,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<space>wl', function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, opts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    -- vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts) -- Slowes down leader r for ranger
+    vim.keymap.set('n', 'gtd', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<space>cn', vim.lsp.buf.rename, opts) -- Slowes down leader r for ranger
     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     --vim.keymap.set('n', '<space>f', function()
@@ -377,17 +423,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
   cmp.setup({
     snippet = {
-      -- REQUIRED - you must specify a snippet engine
       expand = function(args)
         vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
       end,
-    },
-    window = {
-      -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -398,16 +436,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'vsnip' }, -- For vsnip users.
-      -- { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
-    }, {
+      { name = 'vsnip' },
+      { name = 'path' },
       { name = 'buffer' },
     })
   })
 
--- Set configuration for specific filetype.
+  -- Set configuration for specific filetype.
   cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
       { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
@@ -415,26 +450,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       { name = 'buffer' },
     })
   })
-
-  --[[
-  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline({ '/', '?' }, {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-      { name = 'buffer' }
-    }
-  })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
-  --]]
 
   -- Set up lspconfig.
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -444,12 +459,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
   require('lspconfig')['pyright'].setup {
     capabilities = capabilities
   }
-  require('lspconfig')['tsserver'].setup {
+  require('lspconfig')['ts_ls'].setup {
     capabilities = capabilities
   }
-  require('lspconfig')['golangci_lint_ls'].setup {
-    capabilities = capabilities
-  }
+  --require('lspconfig')['golangci_lint_ls'].setup {
+  --  capabilities = capabilities
+  --}
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
@@ -489,27 +504,72 @@ require'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+  textobjects = {
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["<leader>n"] = "@function.outer",
+        -- ["]]"] = { query = "@class.outer", desc = "Next class start" },
+        --
+        -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
+        -- ["]o"] = "@loop.*",
+        -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+        --
+        -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+        -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+        --["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
+        --["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+      },
+      goto_next_end = {
+        ["<leader>N"] = "@function.outer",
+        --["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["<leader>m"] = "@function.outer",
+        --["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["<leader>M"] = "@function.outer",
+        --["[]"] = "@class.outer",
+      },
+      -- Below will go to either the start or the end, whichever is closer.
+      -- Use if you want more granular movements
+      -- Make it even more gradual by adding multiple queries and regex.
+      goto_next = {
+        --["]d"] = "@conditional.outer",
+      },
+      goto_previous = {
+        --["[d"] = "@conditional.outer",
+      }
+    },
+  },
 }
 
+local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+-- vim way: ; goes to the direction you were moving.
+-- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move)
+
 -- This is mostly just setting things to the defaults
-local ranger_nvim = require("ranger-nvim")
-ranger_nvim.setup({
-  enable_cmds = true,
-  replace_netrw = true,
-  keybinds = {
-    ["ov"] = ranger_nvim.OPEN_MODE.vsplit,
-    ["oh"] = ranger_nvim.OPEN_MODE.split,
-    ["ot"] = ranger_nvim.OPEN_MODE.tabedit,
-    ["or"] = ranger_nvim.OPEN_MODE.rifle,
-  },
-  ui = {
-    border = "none",
-    height = 1,
-    width = 1,
-    x = 0.5,
-    y = 0.5,
-  }
-})
+-- local ranger_nvim = require("ranger-nvim")
+-- ranger_nvim.setup({
+--   enable_cmds = true,
+--   replace_netrw = true,
+--   keybinds = {
+--     ["ov"] = ranger_nvim.OPEN_MODE.vsplit,
+--     ["oh"] = ranger_nvim.OPEN_MODE.split,
+--     ["ot"] = ranger_nvim.OPEN_MODE.tabedit,
+--     ["or"] = ranger_nvim.OPEN_MODE.rifle,
+--   },
+--   ui = {
+--     border = "none",
+--     height = 1,
+--     width = 1,
+--     x = 0.5,
+--     y = 0.5,
+--   }
+-- })
 
 -- format imports on save
 vim.api.nvim_create_autocmd('BufWritePre', {
