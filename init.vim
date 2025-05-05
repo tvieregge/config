@@ -3,7 +3,6 @@
 " -----------------------------------------------------------------------------
 set nu
 set nowrap
-set pastetoggle=<F10>
 set hidden
 set ignorecase
 set smartcase
@@ -422,6 +421,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   local cmp = require'cmp'
 
   cmp.setup({
+    completion = { completeopt = 'menu,menuone,noinsert'},
     snippet = {
       expand = function(args)
         vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
@@ -466,6 +466,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   --  capabilities = capabilities
   --}
 
+local ts_utils = require("nvim-treesitter.ts_utils")
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
   ensure_installed = { "c", "lua", "vim", "vimdoc", "sql", "python", "go", "rust", "javascript", "typescript" },
@@ -509,38 +510,27 @@ require'nvim-treesitter.configs'.setup {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-        ["<leader>n"] = "@function.outer",
-        -- ["]]"] = { query = "@class.outer", desc = "Next class start" },
-        --
-        -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
-        -- ["]o"] = "@loop.*",
-        -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
-        --
-        -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-        -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-        --["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
-        --["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+        ["]v"] = "@function.outer",
       },
       goto_next_end = {
-        ["<leader>N"] = "@function.outer",
-        --["]["] = "@class.outer",
+        ["]V"] = "@function.outer",
       },
       goto_previous_start = {
-        ["<leader>m"] = "@function.outer",
-        --["[["] = "@class.outer",
+        ["[m"] = "@function.outer",
       },
       goto_previous_end = {
-        ["<leader>M"] = "@function.outer",
-        --["[]"] = "@class.outer",
+        ["[M"] = "@function.outer",
       },
       -- Below will go to either the start or the end, whichever is closer.
       -- Use if you want more granular movements
       -- Make it even more gradual by adding multiple queries and regex.
       goto_next = {
-        --["]d"] = "@conditional.outer",
+        ["[j"] = "@function.outer",
+        ["]]"] = "@block.outer",
       },
       goto_previous = {
-        --["[d"] = "@conditional.outer",
+        ["[["] = "@block.outer",
+        ["[k"] = "@function.outer",
       }
     },
   },
